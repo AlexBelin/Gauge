@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="gauge-circ"></div>
+    <div id="gauge-line" style="margin: 20px 0;"></div>
+
+    <div id="gauge" style="margin: 100px 0 0 0; padding: 30px; background-color: #222; display: flex; align-items: center;"><p style="color: #fff; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 20px; margin-right: 200px; text-align: center;">mouse left button down + drag to left or right<br>OR<br>scroll mouse wheel</p></div>
+
+    <script src="gauge.js"></script>
+    <script>
+        //==== gauges linked to random values examples
+        var gauge_circ = new GaugeCirc(document.getElementById('gauge-circ'), {'radius': 40, 'stroke': 10, 'color': 'green', 'speed': 0.5, 'displayValue': 'bold 14px arial'});
+        gauge_circ.Render();
+
+        var gauge_line = new GaugeLine(document.getElementById('gauge-line'), {'width': 300, 'stroke': 10, 'color': 'red', 'speed': 0.5, 'displayValue': 'bold 12px arial'});
+        gauge_line.Render();
+
+        var anim = setInterval(() => {
+            gauge_circ.Refresh(Math.floor(Math.random() * 200) + 1, 200);
+            gauge_line.Refresh(Math.floor(Math.random() * 200) + 1, 200);
+        }, 2000);
+        //======================================
+
+        //==== interactive gauge example
+        var gauge_circ2 = new GaugeCirc(document.getElementById('gauge'), {'radius': 60, 'stroke': 20, 'color': '#8f8', 'speed': 1, 'displayValue': '18px arial', 'textColor': '#fff'});
+        gauge_circ2.Render();
+
+        var Mousedown = false;
+        var value_gauge_circ2 = 0;
+        document.getElementById('gauge').addEventListener('mousedown', (event) => {Mousedown = true;});
+        document.getElementById('gauge').addEventListener('mousemove', (event) => {
+            if(Mousedown) {
+                if(event.movementX > 0) {
+                    value_gauge_circ2 += 4;
+                }
+                else {
+                    value_gauge_circ2 -= 4;
+                }
+                if(value_gauge_circ2 < 0) {
+                    value_gauge_circ2 = 0;
+                }
+                if(value_gauge_circ2 > 400) {
+                    value_gauge_circ2 = 400;
+                }
+                gauge_circ2.Refresh(value_gauge_circ2, 400);
+            }
+        });
+        document.getElementById('gauge').addEventListener('mouseup', () => {Mousedown = false;});
+        document.getElementById('gauge').addEventListener('wheel', (event) => {
+            if(event.deltaY < 0) {
+                value_gauge_circ2 += 10;
+            }
+            else {
+                value_gauge_circ2 -= 10;
+            }
+            gauge_circ2.Refresh(value_gauge_circ2, 400);
+        });
+        //======================================
+    </script>
+</body>
+</html>
