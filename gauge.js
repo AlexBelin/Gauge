@@ -83,11 +83,9 @@ class GaugeLine extends Gauge {
             this.ctx.font = this.ConfigObj.displayValue;
             this.ctx.textAlign = 'right';
             this.ctx.textBaseline = 'top';
-            if((this.Value / _Value) > 0.5) {
-                var _X_TextPlace = this.Value * this.CanvasWidth / _ReferenceValue;
-            }
-            else {
-                var _X_TextPlace = (this.Value * this.CanvasWidth / _ReferenceValue) + 30;
+            var _X_TextPlace = this.Value * this.CanvasWidth / _ReferenceValue;
+            if((this.Value / _ReferenceValue) < 0.5) {
+                this.ctx.textAlign = 'left';
             }
             this.ctx.fillText(this.Value + '/' + _ReferenceValue, _X_TextPlace, 0);
             if(this.ConfigObj.textColor) {
