@@ -45,10 +45,12 @@ class Gauge {
 
     RenderGauge(_Value, _ReferenceValue) {
         this.AnimGauge = setInterval(() => {
-            this.DrawGauge(_Value, _ReferenceValue)
+            this.DrawGauge(_Value, _ReferenceValue);
             if(this.Value != _Value) {
                 if(Math.abs(this.Value - _Value) < Math.abs(this.Incr)) {
                     this.Value = _Value;
+                    this.DrawGauge(_Value, _ReferenceValue);
+                    window.clearInterval(this.AnimGauge);
                 }
                 else {
                     this.Value = Math.round(((this.Value + this.Incr) + Number.EPSILON) * this.Round) / this.Round;
@@ -102,12 +104,14 @@ class GaugeCirc extends Gauge {
         this.CanvasDim = (this.ConfigObj.radius + this.ConfigObj.stroke) * 2;
         this.Canvas.setAttribute('width', this.CanvasDim);
         this.Canvas.setAttribute('height', this.CanvasDim);
+        this.StartAngle = this.ConfigObj.StartAngle * Math.PI / 180 || 0;
+        this.EndAngle = this.ConfigObj.EndAngle * Math.PI / 180 || 2 * Math.PI;
     }
 
     DrawGauge(_Value, _ReferenceValue) {
         this.ctx.clearRect(0, 0, this.CanvasDim, this.CanvasDim);
         this.ctx.beginPath();
-        this.ctx.arc(this.CanvasDim / 2, this.CanvasDim / 2, this.ConfigObj.radius, 0, ((this.Value * 2) / _ReferenceValue) * Math.PI);
+        this.ctx.arc(this.CanvasDim / 2, this.CanvasDim / 2, this.ConfigObj.radius, this.StartAngle, this.StartAngle + (this.Value * (this.EndAngle - this.StartAngle) / _ReferenceValue));
         if(this.ConfigObj.displayValue) {
             this.ctx.font = this.ConfigObj.displayValue;
             this.ctx.textAlign = 'center';

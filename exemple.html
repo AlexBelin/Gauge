@@ -8,6 +8,8 @@
 </head>
 <body>
     
+    <div id="gauge-circ-basic" style="margin-bottom:  20px;;"></div>
+
     <div id="gauge-circ"></div>
     <div id="gauge-line" style="margin: 20px 0;"></div>
 
@@ -15,11 +17,16 @@
 
     <script src="gauge.js"></script>
     <script>
+        //==== basic circular gauge with specified start and end angles
+        var gauge_circ_basic = new GaugeCirc(document.getElementById('gauge-circ-basic'), {'radius': 50, 'stroke': 20, 'StartAngle': 150, 'EndAngle': 390, 'color': 'green', 'speed': 1, 'displayValue': 'bold 14px arial'});
+        gauge_circ_basic.Render();
+        gauge_circ_basic.Refresh(400, 400);
+
         //==== gauges linked to random values examples
         var gauge_circ = new GaugeCirc(document.getElementById('gauge-circ'), {'radius': 40, 'stroke': 10, 'color': 'green', 'speed': 0.5, 'displayValue': 'bold 14px arial'});
         gauge_circ.Render();
 
-        var gauge_line = new GaugeLine(document.getElementById('gauge-line'), {'width': 300, 'stroke': 10, 'color': 'red', 'speed': 0.5, 'displayValue': 'bold 12px arial'});
+        var gauge_line = new GaugeLine(document.getElementById('gauge-line'), {'width': 300, 'stroke': 10, 'color': 'red', 'speed': 0.3, 'displayValue': 'bold 12px arial'});
         gauge_line.Render();
 
         var anim = setInterval(() => {
