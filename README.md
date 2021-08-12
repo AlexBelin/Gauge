@@ -10,3 +10,5 @@ The HTML contains :
 1) a basic circular gauge with maximum display and specified start/end angles
 2) some gauges linked to random values examples 
 3) an interactive gauge example
+
+![alt text](https://github.com/AlexBelin/CustomSelect/blob/main/screen02.jpg)
