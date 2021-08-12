@@ -6,4 +6,7 @@ Pack containing a JS file and an HTML example
 3) Launch the gauge with the Render method => Ex: gauge_circ_basic.Render();
 4) Make the gauge draw the value compared to a max value => Ex: gauge_circ_basic.Refresh(400, 400);
 
-The HTML contains a basic circular gauge with specified start and end angles, some gauges linked to random values examples and an interactive gauge example
+The HTML contains :
+1) a basic circular gauge with maximum display and specified start/end angles
+2) some gauges linked to random values examples 
+3) an interactive gauge example
