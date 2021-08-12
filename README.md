@@ -11,4 +11,4 @@ The HTML contains :
 2) some gauges linked to random values examples 
 3) an interactive gauge example
 
-![alt text](https://github.com/AlexBelin/CustomSelect/blob/main/screen02.jpg)
+![alt text](https://github.com/AlexBelin/Gauge/blob/main/screen.jpg)
