@@ -3,7 +3,11 @@ class Gauge {
         this.Target = Target;
         this.ConfigObj = ConfigObj;
         this.Value = 0;
+        this.Wrapper = document.createElement('div');
+        this.Wrapper.style.position = 'relative';
         this.Canvas = document.createElement('canvas');
+        this.Canvas.style.position = 'relative';
+        this.Canvas.style.zIndex = '2';
         this.Incr = 0;
         if(this.ConfigObj.speed.toString().indexOf('.') != -1) {
             if(this.ConfigObj.speed.toString().split(".")[1].length <= 2) {
@@ -18,12 +22,27 @@ class Gauge {
         }
         this.AnimGauge = null;
         this.ctx = this.Canvas.getContext('2d');
+        //====================================
+        this.CanvasShadow = document.createElement('canvas');
+        this.CanvasShadow.style.position = 'absolute';
+        this.CanvasShadow.style.top = '0';
+        this.CanvasShadow.style.left = '0';
+        this.CanvasShadow.style.zIndex = '1';
+        this.ctxShadow = this.CanvasShadow.getContext('2d');
     }
 
     Render() {
-        this.Target.appendChild(this.Canvas);
+        this.Wrapper.appendChild(this.Canvas);
+        this.Target.appendChild(this.Wrapper);
         this.ctx.lineWidth = this.ConfigObj.stroke;
         this.ctx.strokeStyle = this.ConfigObj.color;
+        //====================================
+        if(this.ConfigObj.shadowMax) {
+            this.Wrapper.appendChild(this.CanvasShadow);
+            this.ctxShadow.lineWidth = this.ConfigObj.stroke;
+            this.ctxShadow.strokeStyle = this.ConfigObj.shadowMax;
+            this.RenderShadow();
+        }
     }
 
     Refresh(_Value, _ReferenceValue) {
@@ -72,6 +91,9 @@ class GaugeLine extends Gauge {
         }
         this.Canvas.setAttribute('width', this.CanvasWidth);
         this.Canvas.setAttribute('height', this.CanvasHeight);
+        //====================================
+        this.CanvasShadow.setAttribute('width', this.CanvasWidth);
+        this.CanvasShadow.setAttribute('height', this.CanvasHeight);
     }
 
     DrawGauge(_Value, _ReferenceValue) {
@@ -94,6 +116,13 @@ class GaugeLine extends Gauge {
         }
         this.ctx.stroke();
     }
+
+    RenderShadow() {
+        this.ctxShadow.beginPath();
+        this.ctxShadow.moveTo(0, this.CanvasHeight - (this.ConfigObj.stroke / 2));
+        this.ctxShadow.lineTo(this.CanvasWidth, this.CanvasHeight - (this.ConfigObj.stroke / 2));
+        this.ctxShadow.stroke();
+    }
 }
 
 class GaugeCirc extends Gauge {
@@ -104,6 +133,9 @@ class GaugeCirc extends Gauge {
         this.Canvas.setAttribute('height', this.CanvasDim);
         this.StartAngle = this.ConfigObj.StartAngle * Math.PI / 180 || 0;
         this.EndAngle = this.ConfigObj.EndAngle * Math.PI / 180 || 2 * Math.PI;
+        //====================================
+        this.CanvasShadow.setAttribute('width', this.CanvasDim);
+        this.CanvasShadow.setAttribute('height', this.CanvasDim);
     }
 
     DrawGauge(_Value, _ReferenceValue) {
@@ -120,5 +152,11 @@ class GaugeCirc extends Gauge {
             }
         }
         this.ctx.stroke();
+    }
+
+    RenderShadow() {
+        this.ctxShadow.beginPath();
+        this.ctxShadow.arc(this.CanvasDim / 2, this.CanvasDim / 2, this.ConfigObj.radius, this.StartAngle, this.EndAngle);
+        this.ctxShadow.stroke();
     }
 }

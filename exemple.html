@@ -8,7 +8,7 @@
 </head>
 <body>
     
-    <div id="gauge-circ-basic" style="margin-bottom:  20px;;"></div>
+    <div id="gauge-circ-basic" style="margin-bottom:  20px;"></div>
 
     <div id="gauge-circ"></div>
     <div id="gauge-line" style="margin: 20px 0;"></div>
@@ -18,25 +18,25 @@
     <script src="gauge.js"></script>
     <script>
         //==== basic circular gauge with specified start and end angles
-        var gauge_circ_basic = new GaugeCirc(document.getElementById('gauge-circ-basic'), {'radius': 50, 'stroke': 20, 'StartAngle': 150, 'EndAngle': 390, 'color': 'green', 'speed': 1, 'displayValue': 'bold 14px arial'});
+        var gauge_circ_basic = new GaugeCirc(document.getElementById('gauge-circ-basic'), {'radius': 50, 'stroke': 20, 'StartAngle': 150, 'EndAngle': 390, 'color': 'green', 'speed': 1, 'displayValue': 'bold 14px arial', 'shadowMax': '#ccc'});
         gauge_circ_basic.Render();
         gauge_circ_basic.Refresh(400, 400);
 
         //==== gauges linked to random values examples
-        var gauge_circ = new GaugeCirc(document.getElementById('gauge-circ'), {'radius': 40, 'stroke': 10, 'color': 'green', 'speed': 0.5, 'displayValue': 'bold 14px arial'});
+        var gauge_circ = new GaugeCirc(document.getElementById('gauge-circ'), {'radius': 40, 'stroke': 10, 'color': 'green', 'speed': 0.2, 'displayValue': 'bold 14px arial'});
         gauge_circ.Render();
 
-        var gauge_line = new GaugeLine(document.getElementById('gauge-line'), {'width': 300, 'stroke': 10, 'color': 'red', 'speed': 0.3, 'displayValue': 'bold 12px arial'});
+        var gauge_line = new GaugeLine(document.getElementById('gauge-line'), {'width': 300, 'stroke': 10, 'color': 'red', 'speed': 0.3, 'displayValue': 'bold 12px arial', 'shadowMax': '#ccc'});
         gauge_line.Render();
 
         var anim = setInterval(() => {
             gauge_circ.Refresh(Math.floor(Math.random() * 200) + 1, 200);
             gauge_line.Refresh(Math.floor(Math.random() * 200) + 1, 200);
-        }, 2000);
+        }, 1500);
         //======================================
 
         //==== interactive gauge example
-        var gauge_circ2 = new GaugeCirc(document.getElementById('gauge'), {'radius': 60, 'stroke': 20, 'color': '#8f8', 'speed': 1, 'displayValue': '18px arial', 'textColor': '#fff'});
+        var gauge_circ2 = new GaugeCirc(document.getElementById('gauge'), {'radius': 60, 'stroke': 20, 'color': '#8f8', 'speed': 1, 'displayValue': '18px arial', 'textColor': 'antiquewhite', 'shadowMax': '#666'});
         gauge_circ2.Render();
 
         var Mousedown = false;
